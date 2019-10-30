@@ -1,0 +1,25 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+export class Navbar extends Component {
+    static defaultProps = {
+        title: 'will be overwritten',
+        icon: 'fab fa-github'
+    }
+
+    static propTypes = {
+        title: PropTypes.string.isRequired,
+        icon: PropTypes.string.isRequired       
+    }
+ 
+    render() {
+        return (
+            <div>
+                <i className={this.props.icon}></i>
+                {this.props.title}
+            </div>
+        );
+    }
+}
+
+export default Navbar;
