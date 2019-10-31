@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { Component}  from 'react';
 import './App.css';
 import Navbar from './components/layout/Navbar';
@@ -5,20 +6,27 @@ import UserItem from './components/users/UserItem';
 import Users from './components/users/Users';
 
 
-export class App extends Component {  
+class App extends Component { 
+  state = {
+    users: [],
+    loading: false
+  } 
+  async componentDidMount(){
+    this.setState({ loading: true })
+    const res = await axios
+      .get('https://api.github.com/users')
+      
+      this.setState({ users: res.data, loading: true  })
+  }
   
   render() { 
-   
     
   return ( 
+      <div className="App">      
+        <Navbar />     
       <div>
-      <nav className="navbar bg-primary">        
-        <Navbar title=" Github Finder" />
-        
-      </nav>
-      <h2>
       <Users />
-      </h2>
+      </div>
       </div>
     );
   }
