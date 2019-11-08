@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { Fragment, useState }  from 'react';
+import React, { Fragment, Component}  from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
 import Navbar from './components/layout/Navbar';
@@ -10,65 +10,67 @@ import About from './components/pages/About'
 import User from './components/users/User';
 
 
-const App = () =>  { 
-  const [users, setUsers] = useState([])
-  const [user, setUser] = useState({})
-  const [repos, setRepos] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [alert, setAlert] = useState(null)
+class App extends Component { 
+  state = {
+    users: [],
+    repos: [],
+    user: {},
+    loading: false,
+    alert: null
+  } 
  
-const searchUsers = async (text) => {
-    setLoading(true);
+  searchUsers = async (text) => {
+    console.log(text)
+    this.setState({ loading: true })
     const res = await axios
       .get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
       
-      setUsers(res.data.items)
-      setLoading(false)
+      this.setState({ users: res.data.items, loading: false  })
   }
 
-const getUser = async (username) => {
-    setLoading(true);
+  getUser = async (username) => {
+    this.setState({ loading: true })
     const res = await axios
       .get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
-      setUser(res.data)
-      setLoading(false)
+      console.log(res.data)
+      this.setState({ user: res.data, loading: false  })
   }
 
-const getUserRepos = async (username) => {
-    setLoading(true);
+  getUserRepos = async (username) => {
+    this.setState({ loading: true })
     const res = await axios
       .get(`https://api.github.com/users/${username}/repos?per_page=5sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
       console.log(res.data)
-      setRepos(res.data)
-      setLoading(false)
+      this.setState({ repos: res.data, loading: false  })
   }
 
-const clearUsers = () => {
-    setUsers([])
-      setLoading(false)
+  clearUsers = () => {
+    this.setState({ users: [], loading: false} )
   }
   
-const showAlert = (msg, type) => {
-    setAlert({ msg, type })
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg, type }})
 
-    setTimeout( () => setAlert(null), 4500)
+    setTimeout( () => this.setState({ alert: null}), 4500)
   }
+  render() { 
 
+  const { loading, repos, user, users} = this.state 
   return ( 
     <Router>
       <div className="App">      
         <Navbar />     
       <div className='container'>
               
-                <Alert alert={alert}/>  
+                <Alert alert={this.state.alert}/>  
                 <Switch>
                 <Route exact path='/' render={props => (
                   <Fragment >
                       <Search 
-                        searchUsers={searchUsers} 
-                        clearUsers={clearUsers} 
+                        searchUsers={this.searchUsers} 
+                        clearUsers={this.clearUsers} 
                         showClear={users.length > 0 ? true: false}
-                        setAlert={showAlert}
+                        setAlert={this.setAlert}
                         />
                       <Users loading={loading} users={users}/>
                   </Fragment>
@@ -77,8 +79,8 @@ const showAlert = (msg, type) => {
                 <Route exact path='/user/:login' render={props => (
                   <User 
                       {...props} 
-                      getUser={getUser} 
-                      getUserRepos={ getUserRepos} 
+                      getUser={this.getUser} 
+                      getUserRepos={this.getUserRepos} 
                       user={user} 
                       repos={repos}
                       loading={loading}/>
@@ -89,5 +91,6 @@ const showAlert = (msg, type) => {
       </Router>  
     );
   }
+}
 
 export default App;
