@@ -1,8 +1,14 @@
-import React, { useReducer }from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 import GithubContext from './githubContext';
 import GithubReducer from './githubReducer';
-import { SEARCH_USERS, SET_LOADING, CLEAR_USERS, GET_USER, GET_REPOS } from '../types'
+import {
+  SEARCH_USERS,
+  SET_LOADING,
+  CLEAR_USERS,
+  GET_USER,
+  GET_REPOS
+} from '../types';
 
 const GithubState = props => {
     const initialState = {
@@ -15,24 +21,66 @@ const GithubState = props => {
     const [state, dispatch] = useReducer(GithubReducer, initialState)
 
     // Search Users
+    const searchUsers = async (text) => {
+        setLoading();
+        const res = await axios
+          .get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+          
+          dispatch( {
+              type: SEARCH_USERS,
+              payload: res.data.items
+          })
+      }
 
     // Get user
 
-    // Get Repos    
+    const getUser = async (username) => {
+        setLoading(true);
+        const res = await axios
+        .get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+        
+        dispatch({
+            type: GET_USER,
+            payload: res.data
+        })
+    }
+    // Get Repos   
+    const getUserRepos = async (username) => {
+        setLoading(true);
+        const res = await axios
+        .get(`https://api.github.com/users/${username}/repos?per_page=5sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
+        
+        dispatch({
+            type: GET_REPOS,
+            payload: res.data
+        })
+
+    }
+
 
     //Clear Users 
+    const clearUsers = () => dispatch({ type: CLEAR_USERS })
 
     //Set loading
+    const setLoading = () => dispatch( { type: setLoading })
 
-    return <GithubContext.Provider 
-        value= {{
+    return (
+        <GithubContext.Provider
+          value={{
             users: state.users,
             user: state.user,
             repos: state.repos,
-            loading: state.loading
-        }}
-        {props.children}
-    ></GithubContext.Provider>
-}
+            loading: state.loading,
+            searchUsers,
+            clearUsers,
+            getUser,
+            getUserRepos
+          }}
+        >
+          {props.children}
+        </GithubContext.Provider>
+      );
+    };
+    
 
 export default GithubState
