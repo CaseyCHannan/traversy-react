@@ -12,7 +12,7 @@ const Search = () => {
     const onSubmit = (e) => {
          e.preventDefault()
          if (text === '' ) {
-            AlertContext.setAlert('Your entry is blank', 'light')
+            alertContext.setAlert('Your entry is blank', 'light')
          } else {
          githubContext.searchUsers(text)
          setText('')

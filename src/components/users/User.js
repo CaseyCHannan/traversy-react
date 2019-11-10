@@ -33,7 +33,6 @@ const User = ({ match }) =>  {
 
     if (loading) return <Spinner />
 
-    console.log(name)
     return (
         <Fragment>
             <Link to='/' className='btn btn-light' >Back to Search</Link>

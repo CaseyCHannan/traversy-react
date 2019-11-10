@@ -6,16 +6,15 @@ import Alert from './components/layout/Alert';
 import Users from './components/users/Users';
 import Search from './components/users/Search';
 import About from './components/pages/About'
+import Home from './components/pages/Home'
+import NotFound from './components/pages/Notfound'
 import User from './components/users/User';
 import GithubState from './context/github/GithubState'
 import AlertState from './context/alert/AlertState'
 
 
 const App = () =>  { 
-  const [alert, setAlert] = useState(null)
   
-
-
   return (
       <GithubState>
         <AlertState>
@@ -25,15 +24,10 @@ const App = () =>  {
                <div className='container'>            
                 <Alert />  
                 <Switch>
-                <Route exact path='/' render={props => (
-                  <Fragment >
-                      <Search
-                        />
-                      <Users/>
-                  </Fragment>
-                )}/>   
+                <Route exact path='/' component={Home} />
                   <Route exact path='/about' component={About} />
                   <Route exact path='/user/:login' component={User} />
+                  <Route component={NotFound} />
                </Switch>
              </div>
            </div>
