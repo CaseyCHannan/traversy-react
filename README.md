@@ -1,6 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Exploring brad traversy's REACT 2019 Udemy Course as I've not worked with React Hooks before
+### Deployed at https://github-finder-project-6767.netlify.com
+
+Exploring Brad Traversy's REACT 2019 Udemy Course as I've not worked with React Hooks before
 
 ## Available Scripts
 
