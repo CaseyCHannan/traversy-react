@@ -2,7 +2,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Deployed at https://github-finder-project-6767.netlify.com
 
-Exploring Brad Traversy's REACT 2019 Udemy Course as I've not worked with React Hooks before
+## Page to search for Github by user handle. Returns some user info from Github profiles
+
+Built following Brad Traversy's REACT Course. This allowed me to work with React Hooks for the first time.
 
 ## Available Scripts
 
