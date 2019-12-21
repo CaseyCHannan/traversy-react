@@ -2,9 +2,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Deployed at https://github-finder-project-6767.netlify.com
 
-## Page to search for Github by user handle. Returns some user info from Github profiles
+## Page to search for Github by user handle. Returns some individual user info from Github profiles retrieved from Github API
 
-Built following Brad Traversy's REACT Course. This allowed me to work with React Hooks for the first time.
+Based on project built in Traversy's REACT Course. This allowed me to work with React Hooks for the first time.
 
 ## Available Scripts
 
@@ -72,4 +72,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-# traversy-react-redux
+
