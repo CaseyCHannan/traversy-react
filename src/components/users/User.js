@@ -59,7 +59,7 @@ const User = ({ match }) =>  {
             </div>  
             </div>  
         <div className="card text-center">
-                            HEY
+                        User Repos:
         </div>
         <Repos repos={repos} />
         </Fragment> 
